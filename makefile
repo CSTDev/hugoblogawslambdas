@@ -6,6 +6,7 @@ BINARY_NAME=receivehugoemail
 
 
 build:
+	echo $(BINARY_NAME)
 	GO111MODULE=on $(GOBUILD) -v ./cmd/aws/$(BINARY_NAME).go
 
 build-linux:
@@ -15,4 +16,14 @@ build-linux:
 
 run: build
 	./$(BINARY_NAME).exe
+
+readsend: 
+	$(MAKE) build BINARY_NAME=readsend
+
+build-readsend: readsend	
+
+
+clean: 
+	rm *.exe
+
 	
