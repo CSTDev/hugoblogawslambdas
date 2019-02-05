@@ -20,6 +20,9 @@ run: build
 readsend: 
 	$(MAKE) build BINARY_NAME=readsend
 
+test:
+	GO111MODULE=on $(GOTEST) -v ./...
+
 build-readsend: readsend	
 
 

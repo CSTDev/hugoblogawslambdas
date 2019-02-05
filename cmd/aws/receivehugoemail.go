@@ -6,6 +6,8 @@ import (
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
+	"github.com/aws/aws-sdk-go/service/s3"
+	"github.com/aws/aws-sdk-go/service/s3/s3manager"
 	"github.com/cstdev/lambdahelpers/pkg/bucket"
 	"github.com/cstdev/lambdahelpers/pkg/mail"
 	log "github.com/sirupsen/logrus"
@@ -36,7 +38,13 @@ func handleRequest() (string, error) {
 		return "", err
 	}
 
-	messageBody, objectKey, err := bucket.ReadFile(sess, bucketName)
+	b := bucket.Bucket{
+		Client:   s3.New(sess),
+		Uploader: s3manager.NewUploader(sess),
+		Name:     bucketName,
+	}
+
+	messageBody, objectKey, err := b.ReadFile()
 	if err != nil {
 		return "", err
 	}
@@ -48,12 +56,12 @@ func handleRequest() (string, error) {
 		"body": parsedBody,
 	}).Debug("Message")
 
-	err = bucket.UploadFile(sess, siteBucket, parsedBody.Subject, parsedBody.Body)
+	err = b.UploadFile(parsedBody.Subject, parsedBody.Body)
 	if err != nil {
 		return "", err
 	}
 
-	err = bucket.DeleteObject(sess, bucketName, objectKey)
+	err = b.DeleteObject(objectKey)
 	if err != nil {
 		log.Error("Unable to delete")
 		return "", nil

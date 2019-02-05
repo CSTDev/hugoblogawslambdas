@@ -7,8 +7,10 @@ import (
 	"github.com/cstdev/lambdahelpers/pkg/bucket"
 	"github.com/cstdev/lambdahelpers/pkg/mail"
 
+	"github.com/aws/aws-lambda-go/lambda"
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
+	"github.com/aws/aws-sdk-go/service/s3"
 	log "github.com/sirupsen/logrus"
 )
 
@@ -43,7 +45,12 @@ func handleRequest() (string, error) {
 		return "", err
 	}
 
-	messageBody, objectKey, err := bucket.ReadFile(sess, bucketName)
+	b := bucket.Bucket{
+		Client: s3.New(sess),
+		Name:   bucketName,
+	}
+
+	messageBody, objectKey, err := b.ReadFile()
 	if err != nil {
 		return "", err
 	}
@@ -56,7 +63,7 @@ func handleRequest() (string, error) {
 		return "", err
 	}
 
-	err = bucket.DeleteObject(sess, bucketName, objectKey)
+	err = b.DeleteObject(objectKey)
 
 	return "", nil
 }
@@ -70,8 +77,8 @@ func main() {
 	default:
 		log.SetLevel(log.InfoLevel)
 	}
-	log.Info("Readsend")
-	//lambda.Start(handleRequest)
+
+	lambda.Start(handleRequest)
 	//handleRequest()
 
 }
