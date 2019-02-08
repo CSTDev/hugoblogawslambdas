@@ -4,6 +4,7 @@ import (
 	"errors"
 	"os"
 
+	"github.com/aws/aws-lambda-go/lambda"
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/s3"
@@ -82,10 +83,6 @@ func main() {
 	default:
 		log.SetLevel(log.InfoLevel)
 	}
-	log.Info("receievehugoemail")
-	//lambda.Start(handleRequest)
-	// _, err := handleRequest()
-	// if err != nil {
-	// 	log.Error(err)
-	// }
+
+	lambda.Start(handleRequest)
 }
