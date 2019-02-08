@@ -10,6 +10,7 @@ import (
 	"github.com/aws/aws-sdk-go/service/s3/s3manager"
 	"github.com/cstdev/lambdahelpers/pkg/bucket"
 	"github.com/cstdev/lambdahelpers/pkg/mail"
+	"github.com/cstdev/lambdahelpers/pkg/s3/manager"
 	log "github.com/sirupsen/logrus"
 )
 
@@ -39,9 +40,11 @@ func handleRequest() (string, error) {
 	}
 
 	b := bucket.Bucket{
-		Client:   s3.New(sess),
-		Uploader: s3manager.NewUploader(sess),
-		Name:     bucketName,
+		Client: s3.New(sess),
+		Manager: &manager.BucketManager{
+			Uploader: *s3manager.NewUploader(sess),
+		},
+		Name: bucketName,
 	}
 
 	messageBody, objectKey, err := b.ReadFile()
