@@ -5,9 +5,7 @@ require (
 	github.com/PuerkitoBio/goquery v1.5.0
 	github.com/aws/aws-lambda-go v1.8.2
 	github.com/aws/aws-sdk-go v1.16.26
-	github.com/cstdev/lambdahelpers v0.0.0
+	github.com/cstdev/lambdahelpers v0.1.0
 	github.com/sirupsen/logrus v1.3.0
 	gopkg.in/urfave/cli.v1 v1.20.0 // indirect
 )
-
-replace github.com/cstdev/lambdahelpers => ../lambdahelpers

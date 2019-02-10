@@ -42,10 +42,14 @@ func handleRequest() (string, error) {
 
 	b := bucket.Bucket{
 		Client: s3.New(sess),
+		Name:   bucketName,
+	}
+
+	destBucket := bucket.Bucket{
+		Name: siteBucket,
 		Manager: &manager.BucketManager{
 			Uploader: *s3manager.NewUploader(sess),
 		},
-		Name: bucketName,
 	}
 
 	messageBody, objectKey, err := b.ReadFile()
@@ -60,7 +64,7 @@ func handleRequest() (string, error) {
 		"body": parsedBody,
 	}).Debug("Message")
 
-	err = b.UploadFile(parsedBody.Subject, parsedBody.Body)
+	err = destBucket.UploadFile(parsedBody.Subject, parsedBody.Body)
 	if err != nil {
 		return "", err
 	}
