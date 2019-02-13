@@ -95,7 +95,7 @@ func main() {
 	default:
 		log.SetLevel(log.InfoLevel)
 	}
-
+	log.Info("Hugo Lambda")
 	lambda.Start(handleRequest)
 
 }

@@ -88,5 +88,6 @@ func main() {
 		log.SetLevel(log.InfoLevel)
 	}
 
+	log.Info("Receive Email")
 	lambda.Start(handleRequest)
 }

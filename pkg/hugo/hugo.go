@@ -13,6 +13,8 @@ import (
 const tempDir = "/tmp/site/"
 const configLocation = tempDir + "config.toml"
 
+// updateHost takes writes the actual host (bucket url)
+// to config.toml. It's used for links within the site.
 func updateHost(host string) error {
 	log.WithFields(log.Fields{
 		"config home": configLocation,
@@ -33,22 +35,6 @@ func updateHost(host string) error {
 		return err
 	}
 	return nil
-}
-
-func setPath() {
-	currentPath := os.Getenv("PATH")
-	newPath := currentPath + ":" + os.Getenv("LAMBDA_TASK_ROOT") + ":" + os.Getenv("LAMBDA_RUNTIME_DIR")
-	wrkDir, _ := os.Getwd()
-
-	log.WithFields(log.Fields{
-		"PATH":              newPath,
-		"Old PATH":          currentPath,
-		"Working Directory": wrkDir,
-	}).Info("Changing the path")
-	os.Setenv("PATH", newPath)
-	log.WithFields(log.Fields{
-		"PATH": os.Getenv("PATH"),
-	}).Info("New Path")
 }
 
 func list(path string) error {
@@ -94,7 +80,6 @@ func copyHugo() error {
 
 // Compile - Builds the Hugo static site
 func Compile(host string) error {
-	//setPath()
 	err := copyHugo()
 	if err != nil {
 		log.WithFields(log.Fields{

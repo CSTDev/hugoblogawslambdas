@@ -82,7 +82,7 @@ func main() {
 	default:
 		log.SetLevel(log.InfoLevel)
 	}
-
+	log.Info("Read send")
 	lambda.Start(handleRequest)
 	//handleRequest()
 
