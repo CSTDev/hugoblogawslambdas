@@ -1,4 +1,4 @@
-module github.com/cstdev/recieve-hugo-email
+module github.com/cstdev/hugoblogawslambdas
 
 require (
 	github.com/DusanKasan/parsemail v0.0.0-20190115161936-abc648830b9a
@@ -7,5 +7,6 @@ require (
 	github.com/aws/aws-sdk-go v1.16.26
 	github.com/cstdev/lambdahelpers v0.1.0
 	github.com/sirupsen/logrus v1.3.0
-	gopkg.in/urfave/cli.v1 v1.20.0 // indirect
 )
+
+replace github.com/cstdev/lambdahelpers => ../lambdahelpers

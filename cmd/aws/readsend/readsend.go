@@ -11,6 +11,7 @@ import (
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/s3"
+	"github.com/aws/aws-sdk-go/service/ses"
 	log "github.com/sirupsen/logrus"
 )
 
@@ -45,6 +46,10 @@ func handleRequest() (string, error) {
 		return "", err
 	}
 
+	m := mail.Mail{
+		Client: ses.New(sess),
+	}
+
 	b := bucket.Bucket{
 		Client: s3.New(sess),
 		Name:   bucketName,
@@ -55,7 +60,7 @@ func handleRequest() (string, error) {
 		return "", err
 	}
 
-	err = mail.SendMail(sess, recipient, sender, messageBody)
+	err = m.SendMail(recipient, sender, messageBody)
 	if err != nil {
 		log.WithFields(log.Fields{
 			"error": err,
