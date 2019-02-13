@@ -10,6 +10,11 @@ RECEIVE=receivehugoemail
 
 build-all: build-readsend build-receivehugoemail build-hugolambda
 
+build-all-linux: 
+	$(MAKE) build-linux BINARY_NAME=$(READ)
+	$(MAKE) build-linux BINARY_NAME=$(HUGO)
+	$(MAKE) build-linux BINARY_NAME=$(RECEIVE)
+
 build: check-binary
 	echo $(BINARY_NAME)
 	GO111MODULE=on $(GOBUILD) -v ./cmd/aws/$(BINARY_NAME)/$(BINARY_NAME).go
