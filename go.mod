@@ -8,5 +8,3 @@ require (
 	github.com/cstdev/lambdahelpers v0.1.0
 	github.com/sirupsen/logrus v1.3.0
 )
-
-replace github.com/cstdev/lambdahelpers => ../lambdahelpers
