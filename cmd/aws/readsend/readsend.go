@@ -46,7 +46,7 @@ func handleRequest() (string, error) {
 		return "", err
 	}
 
-	m := mail.Mail{
+	m := mail.SESMail{
 		Client: ses.New(sess),
 	}
 
