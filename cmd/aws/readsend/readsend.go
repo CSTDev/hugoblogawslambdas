@@ -4,8 +4,8 @@ import (
 	"errors"
 	"os"
 
-	"github.com/cstdev/lambdahelpers/pkg/bucket"
 	"github.com/cstdev/lambdahelpers/pkg/mail"
+	"github.com/cstdev/lambdahelpers/pkg/storage"
 
 	"github.com/aws/aws-lambda-go/lambda"
 	"github.com/aws/aws-sdk-go/aws"
@@ -46,11 +46,11 @@ func handleRequest() (string, error) {
 		return "", err
 	}
 
-	m := mail.Mail{
+	m := mail.SESMail{
 		Client: ses.New(sess),
 	}
 
-	b := bucket.Bucket{
+	b := storage.Bucket{
 		Client: s3.New(sess),
 		Name:   bucketName,
 	}

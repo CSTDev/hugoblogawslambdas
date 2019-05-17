@@ -9,9 +9,9 @@ import (
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/s3"
 	"github.com/aws/aws-sdk-go/service/s3/s3manager"
-	"github.com/cstdev/lambdahelpers/pkg/bucket"
 	"github.com/cstdev/lambdahelpers/pkg/mail"
 	"github.com/cstdev/lambdahelpers/pkg/s3/manager"
+	"github.com/cstdev/lambdahelpers/pkg/storage"
 	log "github.com/sirupsen/logrus"
 )
 
@@ -40,12 +40,12 @@ func handleRequest() (string, error) {
 		return "", err
 	}
 
-	b := bucket.Bucket{
+	b := storage.Bucket{
 		Client: s3.New(sess),
 		Name:   bucketName,
 	}
 
-	destBucket := bucket.Bucket{
+	destBucket := storage.Bucket{
 		Name: siteBucket,
 		Manager: &manager.BucketManager{
 			Uploader: *s3manager.NewUploader(sess),
