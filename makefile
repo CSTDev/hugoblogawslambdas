@@ -3,7 +3,7 @@ GOBUILD=$(GOCMD) build
 GOTEST=$(GOCMD) test
 GOGET=$(GOCMD) get
 GOBIN=$(GOPATH)/bin
-ZIPBUILD=$(GOBIN)/build-lambda-zip.exe
+ZIPBUILD=$(GOBIN)/build-lambda-zip
 HUGO=hugolambda
 READ=readsend
 RECEIVE=receivehugoemail
@@ -26,9 +26,9 @@ ifeq ("$(wildcard $(ZIPBUILD))","")
 	GO111MODULE=on  $(GOGET) -u github.com/aws/aws-lambda-go/cmd/build-lambda-zip
 endif
 ifeq ($(BINARY_NAME),$(HUGO))
-		$(GOBIN)/build-lambda-zip.exe -o $(BINARY_NAME).zip $(BINARY_NAME) hugo
+		$(GOBIN)/build-lambda-zip -o $(BINARY_NAME).zip $(BINARY_NAME) hugo
 else
-		$(GOBIN)/build-lambda-zip.exe -o $(BINARY_NAME).zip $(BINARY_NAME)
+		$(GOBIN)/build-lambda-zip -o $(BINARY_NAME).zip $(BINARY_NAME)
 endif
 
 run: check-binary build
