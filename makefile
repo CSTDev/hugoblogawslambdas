@@ -8,7 +8,7 @@ HUGO=hugolambda
 READ=readsend
 RECEIVE=receivehugoemail
 
-build-all: build-readsend build-receivehugoemail build-hugolambda
+build-all: build-readsend build-receivehugoemail build-hugolambda build-receivehugoemailgit
 
 build-all-linux: 
 	$(MAKE) build-linux BINARY_NAME=$(READ)
@@ -42,6 +42,10 @@ build-readsend:
 
 build-receivehugoemail:
 	$(MAKE) build BINARY_NAME=receivehugoemail
+
+build-receivehugoemailgit:
+	$(MAKE) build BINARY_NAME=receivehugoemailgit
+	zip receivehugoemailgit.zip receivehugoemailgit
 
 build-hugolambda:
 	$(MAKE) build BINARY_NAME=hugolambda
